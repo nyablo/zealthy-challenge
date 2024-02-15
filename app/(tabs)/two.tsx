@@ -1,7 +1,6 @@
 /* eslint-disable react-native-a11y/has-valid-accessibility-descriptors */
 import { FlatList, Pressable, StyleSheet } from 'react-native';
-
-import { Text } from '@/components/Themed';
+import { Text } from 'react-native-paper';
 
 type Item = {
   name: string;

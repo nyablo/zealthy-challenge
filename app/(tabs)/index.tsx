@@ -55,6 +55,7 @@ export default function NewTicket() {
             accessibilityHint="Enter description of the issue"
             style={styles.input}
             label="Description"
+            numberOfLines={4}
             onChangeText={onChange}
             value={value}
             multiline
