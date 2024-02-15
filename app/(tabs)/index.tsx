@@ -1,14 +1,87 @@
-import { StyleSheet } from 'react-native';
+import { useForm, Controller } from 'react-hook-form';
+import { StyleSheet, View } from 'react-native';
+import { TextInput, Button } from 'react-native-paper';
 
-import EditScreenInfo from '@/components/EditScreenInfo';
-import { Text, View } from '@/components/Themed';
+export default function NewTicket() {
+  const { control, handleSubmit } = useForm();
 
-export default function TabOneScreen() {
+  const onSubmit = (data: any) => {
+    console.log('Name:', data.name);
+    console.log('Email:', data.email);
+    console.log('Photo:', data.photo);
+    console.log('Description:', data.description);
+  };
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Tab One</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="app/(tabs)/index.tsx" />
+      <Controller
+        control={control}
+        render={({ field: { onChange, value } }) => (
+          <TextInput
+            accessibilityRole="text"
+            accessibilityLabel="Name input field"
+            accessibilityHint="Enter your name"
+            style={styles.input}
+            label="Name"
+            onChangeText={onChange}
+            value={value}
+          />
+        )}
+        name="name"
+        defaultValue=""
+      />
+      <Controller
+        control={control}
+        render={({ field: { onChange, value } }) => (
+          <TextInput
+            accessibilityRole="text"
+            accessibilityLabel="Email input field"
+            accessibilityHint="Enter your email address"
+            style={styles.input}
+            label="Email"
+            onChangeText={onChange}
+            value={value}
+          />
+        )}
+        name="email"
+        defaultValue=""
+      />
+      <Controller
+        control={control}
+        render={({ field: { onChange, value } }) => (
+          <TextInput
+            accessibilityRole="text"
+            accessibilityLabel="Description input field"
+            accessibilityHint="Enter description of the issue"
+            style={styles.input}
+            label="Description"
+            onChangeText={onChange}
+            value={value}
+            multiline
+          />
+        )}
+        name="description"
+        defaultValue=""
+      />
+      <Controller
+        control={control}
+        render={({ field: { onChange, value } }) => (
+          <TextInput
+            accessibilityRole="text"
+            accessibilityLabel="Name input field"
+            accessibilityHint="Enter your name"
+            style={styles.input}
+            label="Photo/Attachment"
+            onChangeText={onChange}
+            value={value}
+          />
+        )}
+        name="photo"
+        defaultValue=""
+      />
+      <Button mode="contained" onPress={handleSubmit(onSubmit)}>
+        Submit
+      </Button>
     </View>
   );
 }
@@ -18,14 +91,14 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    padding: 16,
   },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
+  input: {
+    width: '100%',
+    // height: 40,
+    // borderWidth: 1,
+    // borderColor: '#ccc',
+    // marginBottom: 10,
+    // paddingHorizontal: 10,
   },
 });
