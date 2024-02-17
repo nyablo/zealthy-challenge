@@ -4,17 +4,13 @@ import React, { useState, useEffect } from 'react';
 import { Alert, Image, Pressable, StyleSheet, View } from 'react-native';
 import { useTheme, Text, TouchableRipple } from 'react-native-paper';
 
-interface ImagePickerProps {
+interface Props {
   name: string;
   selectionLimit?: number;
   onChange: (assets: ImagePicker.ImagePickerAsset[]) => void;
 }
 
-const ImagePickerComponent: React.FC<ImagePickerProps> = ({
-  name,
-  onChange,
-  selectionLimit = 10,
-}) => {
+const ImagePickerComponent: React.FC<Props> = ({ name, onChange, selectionLimit = 10 }) => {
   const [selectedImages, setSelectedImages] = useState<ImagePicker.ImagePickerAsset[]>([]);
   const theme = useTheme();
 

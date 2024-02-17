@@ -1,66 +1,36 @@
 /* eslint-disable react-native-a11y/has-valid-accessibility-descriptors */
-import { FlatList, Pressable, StyleSheet } from 'react-native';
-import { Text } from 'react-native-paper';
+import { FlatList, StyleSheet } from 'react-native';
+import { ActivityIndicator, Text } from 'react-native-paper';
 
-type Item = {
-  name: string;
-  email: string;
-  status: string;
-};
-
-const ListItem: React.FC<{ item: Item }> = ({ item }) => {
-  const handlePress = () => {
-    // Handle navigation to detailed view
-  };
-
-  return (
-    <Pressable onPress={handlePress} style={styles.itemContainer}>
-      <Text style={styles.name}>{item.name}</Text>
-      <Text style={styles.email}>{item.email}</Text>
-      <Text style={styles.status}>{item.status}</Text>
-    </Pressable>
-  );
-};
+import TicketListItem from '@/components/TicketListItem';
+import useTickets from '@/hooks/useTickets';
 
 export default function AdminPanel() {
-  const data: Item[] = [
-    {
-      name: 'John Doe',
-      email: 'john.doe@example.com',
-      status: 'Active',
-    },
-    {
-      name: 'Jane Smith',
-      email: 'jane.smith@example.com',
-      status: 'Inactive',
-    },
-    // Add more items as needed
-  ];
+  const { tickets, isLoading, error } = useTickets();
+
+  if (isLoading) {
+    return <ActivityIndicator style={styles.activityIndicator} animating />;
+  }
+
+  if (error) {
+    return <Text style={styles.errorText}>Error: {error}</Text>;
+  }
+
   return (
     <FlatList
-      data={data}
-      keyExtractor={(item) => item.email}
-      renderItem={({ item }) => <ListItem item={item} />}
+      data={tickets}
+      keyExtractor={(item) => item.id}
+      renderItem={({ item }) => <TicketListItem ticket={item} />}
     />
   );
 }
 
 const styles = StyleSheet.create({
-  itemContainer: {
-    padding: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
+  activityIndicator: {
+    marginTop: 16,
   },
-  name: {
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  email: {
-    fontSize: 14,
-    color: '#888',
-  },
-  status: {
-    fontSize: 14,
-    color: '#888',
+  errorText: {
+    marginTop: 16,
+    textAlign: 'center',
   },
 });

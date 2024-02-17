@@ -40,7 +40,7 @@ export default function CreateTicketModal() {
     try {
       fileRefs = await uploadFiles(selectedImages as FileDescriptor[]);
     } catch (error) {
-      Alert.alert('Failed to upload images');
+      Alert.alert('Failed to upload images', (error as Error).message);
       console.debug('Error uploading images:', error);
       return;
     }
@@ -51,8 +51,8 @@ export default function CreateTicketModal() {
       Alert.alert('Ticket submitted');
       router.back();
     } catch (error) {
+      Alert.alert('Failed to create ticket', (error as Error).message);
       console.debug('Error submitting form:', error);
-      Alert.alert('Failed to submit form');
     }
   };
 

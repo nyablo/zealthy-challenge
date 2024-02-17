@@ -43,6 +43,7 @@ function RootLayoutNav() {
           name="createTicketModal"
           options={{ presentation: 'modal', title: 'Submit a ticket' }}
         />
+        <Stack.Screen name="ticketDetails" options={{ title: 'Ticket details' }} />
       </Stack>
     </PaperProvider>
   );
