@@ -1,2 +1,5 @@
 /.expo
 node_modules
+
+# generated files
+expo-env.d.ts

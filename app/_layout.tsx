@@ -4,7 +4,7 @@ import { Link, Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import { Pressable } from 'react-native';
-import { PaperProvider, Text } from 'react-native-paper';
+import { PaperProvider } from 'react-native-paper';
 
 export {
   // Catch any errors thrown by the Layout component.
