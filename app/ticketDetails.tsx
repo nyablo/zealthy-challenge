@@ -1,7 +1,7 @@
 /* eslint-disable react-native-a11y/has-valid-accessibility-descriptors */
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useState } from 'react';
-import { Alert, ScrollView, StyleSheet, View } from 'react-native';
+import { Alert, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, View } from 'react-native';
 import { Button, Checkbox, Divider, Text, TextInput } from 'react-native-paper';
 
 import ImagesGrid from '@/components/ImagesGrid';
@@ -44,78 +44,86 @@ export default function TicketDetails() {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Text variant="labelLarge">Name:</Text>
-      <Text variant="bodyLarge">{name}</Text>
-      <Divider style={styles.divider} />
+    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+      <ScrollView contentContainerStyle={styles.container}>
+        <Text variant="labelLarge">Name:</Text>
+        <Text variant="bodyLarge">{name}</Text>
+        <Divider style={styles.divider} />
 
-      <Text variant="labelLarge">Email:</Text>
-      <Text variant="bodyLarge">{email}</Text>
-      <Divider style={styles.divider} />
+        <Text variant="labelLarge">Email:</Text>
+        <Text variant="bodyLarge">{email}</Text>
+        <Divider style={styles.divider} />
 
-      <Text variant="labelLarge">Description:</Text>
-      <Text variant="bodyLarge">{description}</Text>
-      <Divider style={styles.divider} />
+        <Text variant="labelLarge">Description:</Text>
+        <Text variant="bodyLarge">{description}</Text>
+        <Divider style={styles.divider} />
 
-      <Text variant="labelLarge">Attachments:</Text>
-      <ImagesGrid uris={attachments} onPress={openImage} />
+        {attachments?.length > 0 && (
+          <>
+            <Text variant="labelLarge">Attachments:</Text>
+            <ImagesGrid uris={attachments} onPress={openImage} />
+            <Divider style={styles.divider} />
+          </>
+        )}
 
-      <Divider style={styles.divider} />
-      <Text variant="labelLarge">Response:</Text>
-      <TextInput
-        mode="outlined"
-        accessibilityRole="text"
-        accessibilityLabel="Description input field"
-        accessibilityHint="Enter description of the issue"
-        placeholder="Doctor's comment..."
-        onChangeText={setResponse}
-        defaultValue={response}
-        maxLength={500}
-        multiline
-        numberOfLines={5}
-        lineBreakStrategyIOS="push-out"
-        style={styles.textInput}
-      />
-      <Divider style={styles.divider} />
-      <Text variant="labelLarge">Status:</Text>
-      <View>
-        <Checkbox.Item
-          label="New"
-          status={status === 'new' ? 'checked' : 'unchecked'}
-          onPress={() => setStatus('new')}
+        <Text variant="labelLarge">Response:</Text>
+        <TextInput
+          mode="outlined"
+          accessibilityRole="text"
+          accessibilityLabel="Description input field"
+          accessibilityHint="Enter description of the issue"
+          placeholder="Doctor's comment..."
+          onChangeText={setResponse}
+          defaultValue={response}
+          maxLength={500}
+          multiline
+          numberOfLines={5}
+          style={styles.textInput}
+          scrollEnabled={false}
         />
-        <Checkbox.Item
-          label="In Progress"
-          status={status === 'in-progress' ? 'checked' : 'unchecked'}
-          onPress={() => setStatus('in-progress')}
-        />
-        <Checkbox.Item
-          label="Resolved"
-          status={status === 'resolved' ? 'checked' : 'unchecked'}
-          onPress={() => setStatus('resolved')}
-        />
-      </View>
-      <Divider style={styles.divider} />
-      <Button
-        disabled={isSubmitting}
-        onPress={saveChanges}
-        mode="contained"
-        style={{ marginTop: 8 }}>
-        {isSubmitting ? 'Saving...' : 'Save changes'}
-      </Button>
-    </ScrollView>
+        <Divider style={styles.divider} />
+        <Text variant="labelLarge">Status:</Text>
+        <View>
+          <Checkbox.Item
+            label="New"
+            status={status === 'new' ? 'checked' : 'unchecked'}
+            onPress={() => setStatus('new')}
+          />
+          <Checkbox.Item
+            label="In Progress"
+            status={status === 'in-progress' ? 'checked' : 'unchecked'}
+            onPress={() => setStatus('in-progress')}
+          />
+          <Checkbox.Item
+            label="Resolved"
+            status={status === 'resolved' ? 'checked' : 'unchecked'}
+            onPress={() => setStatus('resolved')}
+          />
+        </View>
+        <Divider style={styles.divider} />
+        <Button
+          disabled={isSubmitting}
+          onPress={saveChanges}
+          mode="contained"
+          style={{ marginTop: 8 }}>
+          {isSubmitting ? 'Saving...' : 'Save changes'}
+        </Button>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
-    // alignItems: 'center',
     justifyContent: 'flex-start',
     padding: 16,
+    paddingBottom: 110,
   },
   divider: {
     marginVertical: 8,
   },
-  textInput: { height: 120, marginTop: 8 },
+  textInput: {
+    marginTop: 8,
+    textAlign: 'auto',
+  },
 });

@@ -1,9 +1,10 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
+import { Link, Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
-import { PaperProvider } from 'react-native-paper';
+import { Pressable } from 'react-native';
+import { PaperProvider, Text } from 'react-native-paper';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -38,12 +39,58 @@ function RootLayoutNav() {
   return (
     <PaperProvider>
       <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false, title: '' }} />
+        <Stack.Screen
+          name="index"
+          options={{
+            title: 'Patient Portal',
+            headerRight: () => (
+              <Link href="/adminPanel" replace asChild>
+                <Pressable
+                  accessibilityRole="button"
+                  accessibilityLabel="Switch to admin panel view"
+                  accessibilityHint="Switches app mode">
+                  {({ pressed }) => (
+                    <FontAwesome
+                      name="suitcase"
+                      size={25}
+                      style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
+                    />
+                  )}
+                </Pressable>
+              </Link>
+            ),
+          }}
+        />
+        <Stack.Screen
+          name="adminPanel"
+          options={{
+            title: 'Admin Panel',
+            headerRight: () => (
+              <Link href="/" replace asChild>
+                <Pressable
+                  accessibilityRole="button"
+                  accessibilityLabel="Switch to my tickets view"
+                  accessibilityHint="Switches app mode">
+                  {({ pressed }) => (
+                    <FontAwesome
+                      name="user"
+                      size={25}
+                      style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
+                    />
+                  )}
+                </Pressable>
+              </Link>
+            ),
+          }}
+        />
         <Stack.Screen
           name="createTicketModal"
           options={{ presentation: 'modal', title: 'Submit a ticket' }}
         />
-        <Stack.Screen name="ticketDetails" options={{ title: 'Ticket details' }} />
+        <Stack.Screen
+          name="ticketDetails"
+          options={{ title: 'Ticket details', headerBackTitleVisible: false }}
+        />
       </Stack>
     </PaperProvider>
   );

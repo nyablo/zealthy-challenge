@@ -2,7 +2,7 @@ import { Link } from 'expo-router';
 import { StyleSheet, ScrollView } from 'react-native';
 import { Button } from 'react-native-paper';
 
-export default function NewTicket() {
+export default function MyTickets() {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Link href="/createTicketModal" asChild>
