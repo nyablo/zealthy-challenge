@@ -38,8 +38,11 @@ function RootLayoutNav() {
   return (
     <PaperProvider>
       <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
+        <Stack.Screen name="(tabs)" options={{ headerShown: false, title: '' }} />
+        <Stack.Screen
+          name="createTicketModal"
+          options={{ presentation: 'modal', title: 'Submit a ticket' }}
+        />
       </Stack>
     </PaperProvider>
   );

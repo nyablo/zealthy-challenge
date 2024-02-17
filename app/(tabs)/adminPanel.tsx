@@ -22,7 +22,7 @@ const ListItem: React.FC<{ item: Item }> = ({ item }) => {
   );
 };
 
-export default function TicketsList() {
+export default function AdminPanel() {
   const data: Item[] = [
     {
       name: 'John Doe',

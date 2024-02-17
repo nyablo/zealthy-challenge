@@ -16,17 +16,17 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Tab One',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          title: 'My Tickets',
+          tabBarIcon: ({ color }) => <TabBarIcon name="ticket" color={color} />,
           headerRight: () => (
-            <Link href="/modal" asChild>
+            <Link href="/createTicketModal" asChild>
               <Pressable
                 accessibilityRole="button"
                 accessibilityLabel="Modal Button"
                 accessibilityHint="Opens modal">
                 {({ pressed }) => (
                   <FontAwesome
-                    name="info-circle"
+                    name="plus-circle"
                     size={25}
                     style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
                   />
@@ -37,10 +37,10 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="two"
+        name="adminPanel"
         options={{
-          title: 'Tab Two',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          title: 'Admin Panel',
+          tabBarIcon: ({ color }) => <TabBarIcon name="inbox" color={color} />,
         }}
       />
     </Tabs>

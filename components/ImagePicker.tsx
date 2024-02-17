@@ -2,7 +2,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import React, { useState, useEffect } from 'react';
 import { Alert, Image, Pressable, StyleSheet, View } from 'react-native';
-import { useTheme, Text } from 'react-native-paper';
+import { useTheme, Text, TouchableRipple } from 'react-native-paper';
 
 interface ImagePickerProps {
   name: string;
@@ -37,6 +37,7 @@ const ImagePickerComponent: React.FC<ImagePickerProps> = ({
       quality: 1,
       allowsMultipleSelection,
       selectionLimit: selectionLimit - selectedImages.length,
+      base64: true,
     });
 
     if (!result.canceled) {
@@ -54,52 +55,57 @@ const ImagePickerComponent: React.FC<ImagePickerProps> = ({
   };
 
   return (
-    <Pressable
+    <TouchableRipple
       onPress={pickImage}
       disabled={!canAddMore}
       accessibilityRole="button"
       accessibilityLabel={`Image picker button: ${name}`}
       accessibilityHint="Opens the image picker"
-      style={[styles.imagePicker, { backgroundColor: theme.colors.background }]}>
-      {hasSelected && (
-        <View style={styles.imagesContainer}>
-          {selectedImages.map(({ uri }, index) => (
-            <Pressable
-              accessibilityRole="button"
-              accessibilityLabel={`Delete image ${index + 1}`}
-              accessibilityHint="Deletes an image from the selected"
-              style={styles.imageWrapper}
-              onPress={() => deleteImage(index)}
-              key={`image-${index}`}>
-              {({ pressed }) => (
-                <>
-                  <Image style={styles.image} source={{ uri }} />
-                  <View
-                    style={[
-                      styles.deleteButton,
-                      { backgroundColor: theme.colors.background, opacity: pressed ? 1 : 0.8 },
-                    ]}>
-                    <FontAwesome
-                      color={pressed ? theme.colors.error : theme.colors.onBackground}
-                      size={20}
-                      name="trash-o"
-                    />
-                  </View>
-                </>
-              )}
-            </Pressable>
-          ))}
-        </View>
-      )}
-      <Text
-        style={[
-          styles.ctaText,
-          !canAddMore && { color: theme.colors.onSurfaceDisabled },
-          hasSelected && { paddingTop: 4 },
-        ]}>
-        Add photos
-      </Text>
-    </Pressable>
+      style={[
+        styles.imagePicker,
+        { backgroundColor: theme.colors.background, borderColor: theme.colors.outline },
+      ]}>
+      <>
+        {hasSelected && (
+          <View style={styles.imagesContainer}>
+            {selectedImages.map(({ uri }, index) => (
+              <Pressable
+                accessibilityRole="button"
+                accessibilityLabel={`Delete image ${index + 1}`}
+                accessibilityHint="Deletes an image from the selected"
+                style={styles.imageWrapper}
+                onPress={() => deleteImage(index)}
+                key={`image-${index}`}>
+                {({ pressed }) => (
+                  <>
+                    <Image style={styles.image} source={{ uri }} />
+                    <View
+                      style={[
+                        styles.deleteButton,
+                        { backgroundColor: theme.colors.background, opacity: pressed ? 1 : 0.8 },
+                      ]}>
+                      <FontAwesome
+                        color={pressed ? theme.colors.error : theme.colors.onBackground}
+                        size={20}
+                        name="trash-o"
+                      />
+                    </View>
+                  </>
+                )}
+              </Pressable>
+            ))}
+          </View>
+        )}
+        <Text
+          style={[
+            styles.ctaText,
+            !canAddMore && { color: theme.colors.onSurfaceDisabled },
+            hasSelected && { paddingTop: 4 },
+          ]}>
+          Add photos
+        </Text>
+      </>
+    </TouchableRipple>
   );
 };
 
@@ -128,7 +134,6 @@ const styles = StyleSheet.create({
   },
   imagePicker: {
     marginBottom: 16,
-    borderColor: '#ccc',
     borderWidth: 1,
     width: '100%',
     borderRadius: 4,
