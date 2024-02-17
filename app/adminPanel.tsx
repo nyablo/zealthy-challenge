@@ -1,11 +1,12 @@
 /* eslint-disable react-native-a11y/has-valid-accessibility-descriptors */
 import { FlatList, RefreshControl, StyleSheet } from 'react-native';
-import { ActivityIndicator, Text } from 'react-native-paper';
+import { ActivityIndicator, Text, useTheme } from 'react-native-paper';
 
 import TicketListItem from '@/components/TicketListItem';
 import useTickets from '@/hooks/useTickets';
 
 export default function AdminPanel() {
+  const theme = useTheme();
   const { tickets, isLoading, error, refetch } = useTickets();
 
   if (isLoading) {
@@ -18,6 +19,7 @@ export default function AdminPanel() {
 
   return (
     <FlatList
+      style={{ backgroundColor: theme.colors.background }}
       refreshControl={<RefreshControl refreshing={isLoading} onRefresh={refetch} />}
       data={tickets}
       keyExtractor={(item) => item.id}
