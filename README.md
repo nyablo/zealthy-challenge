@@ -18,10 +18,8 @@ Populate `.env` file with your values (or create `.env.local` and use `.env` as 
 
 ### Install dependencies
 
-```
-npm i
-```
+`npm i`
 
 ### Run
 
-- `npm run start` (or `npm run ios`, `npm run android`)
+`npm run start` (or `npm run ios`, `npm run android`)
