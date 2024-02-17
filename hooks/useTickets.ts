@@ -22,26 +22,31 @@ const useTickets = () => {
   const [error, setError] = useState('');
   const [isLoading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchTransactions = async () => {
-      try {
-        const querySnapshot = await getDocs(ticketsCollectionRef);
-        const res: Ticket[] = [];
-        querySnapshot.forEach((doc) => {
-          res.push({ ...doc.data(), id: doc.id } as Ticket);
-        });
-        setTickets(res);
-        setLoading(false);
-      } catch (error) {
-        setError(`Unable to load tickets: ${(error as Error).message}`);
-        setLoading(false);
-      }
-    };
-
+  const refetch = () => {
+    setLoading(true);
     fetchTransactions();
-  }, []);
+  };
 
-  return { tickets, error, isLoading };
+  const fetchTransactions = async () => {
+    try {
+      const querySnapshot = await getDocs(ticketsCollectionRef);
+      const res: Ticket[] = [];
+      querySnapshot.forEach((doc) => {
+        res.push({ ...doc.data(), id: doc.id } as Ticket);
+      });
+      setTickets(res);
+      setLoading(false);
+    } catch (error) {
+      setError(`Unable to load tickets: ${(error as Error).message}`);
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchTransactions();
+  }, [fetchTransactions]);
+
+  return { tickets, error, isLoading, refetch };
 };
 
 export default useTickets;
