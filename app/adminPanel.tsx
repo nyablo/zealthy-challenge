@@ -17,6 +17,10 @@ export default function AdminPanel() {
     return <Text style={styles.errorText}>Error: {error}</Text>;
   }
 
+  if (tickets.length === 0) {
+    return <Text style={styles.errorText}>No tickets yet</Text>;
+  }
+
   return (
     <FlatList
       style={{ backgroundColor: theme.colors.background }}
