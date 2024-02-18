@@ -1,5 +1,5 @@
 /* eslint-disable react-native-a11y/has-valid-accessibility-descriptors */
-import { FlatList, RefreshControl, StyleSheet } from 'react-native';
+import { FlatList, RefreshControl, SafeAreaView, StyleSheet } from 'react-native';
 import { ActivityIndicator, Text, useTheme } from 'react-native-paper';
 
 import TicketListItem from '@/components/TicketListItem';
@@ -22,13 +22,15 @@ export default function AdminPanel() {
   }
 
   return (
-    <FlatList
-      style={{ backgroundColor: theme.colors.background }}
-      refreshControl={<RefreshControl refreshing={isLoading} onRefresh={refetch} />}
-      data={tickets}
-      keyExtractor={(item) => item.id}
-      renderItem={({ item }) => <TicketListItem ticket={item} />}
-    />
+    <SafeAreaView style={{ flex: 1 }}>
+      <FlatList
+        style={{ backgroundColor: theme.colors.background }}
+        refreshControl={<RefreshControl refreshing={isLoading} onRefresh={refetch} />}
+        data={tickets}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => <TicketListItem ticket={item} />}
+      />
+    </SafeAreaView>
   );
 }
 
